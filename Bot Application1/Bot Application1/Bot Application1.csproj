@@ -111,7 +111,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cards\UserInfoCard.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Data\ConferenceData.cs" />
+    <Compile Include="Data\ConferenceApi.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
     <Compile Include="Dialogs\RootDialog.cs" />
     <Compile Include="Global.asax.cs">
