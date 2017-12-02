@@ -19,12 +19,18 @@ namespace Bot_Application1
         /// </summary>
         public async Task<HttpResponseMessage> Post([FromBody]Activity activity)
         {
+            var client = new ConnectorClient(new Uri(activity.ServiceUrl), new MicrosoftAppCredentials());
+
             if (activity.Type == ActivityTypes.Message)
             {
+
                 if (activity.Text.Contains("speaker") || activity.Text.Contains("whois"))
                 {
-                    var client = new ConnectorClient(new Uri(activity.ServiceUrl), new MicrosoftAppCredentials());
-                    await client.Conversations.SendToConversationAsync(await new UserInfoCard().GetUserInfoCardAsync(activity));
+                   await client.Conversations.SendToConversationAsync(await new UserInfoCard().GetUserInfoCardAsync(activity));
+                }
+                else if (activity.Text.Contains("conf"))
+                {
+                    await Conversation.SendAsync(activity, () => new Dialogs.ConferenceDetailsDialog());
                 }
                 else
                 {
@@ -33,9 +39,7 @@ namespace Bot_Application1
             }
             else if (activity.Type == ActivityTypes.ConversationUpdate)
             {
-                IConversationUpdateActivity conversationUpdate = activity;
-                var client = new ConnectorClient(new Uri(activity.ServiceUrl), new MicrosoftAppCredentials());
-                if (activity.MembersAdded != null)
+                  if (activity.MembersAdded != null)
                 {
                     activity
                         .MembersAdded

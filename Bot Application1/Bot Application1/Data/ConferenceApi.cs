@@ -1,9 +1,11 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
 namespace Bot_Application1
 {
     //https://quicktype.io/?l=cs&r=json2csharp#l=cs&r=json2csharp
+    [Serializable]
     public partial class Event
     {
         [JsonProperty("city_name")]
@@ -109,6 +111,7 @@ namespace Bot_Application1
         public TagList[] TagList { get; set; }
     }
 
+    [Serializable]
     public partial class SpeakerList
     {
         [JsonProperty("editions")]

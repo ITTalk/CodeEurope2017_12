@@ -116,6 +116,7 @@
     <Compile Include="Data\ConferenceData.cs" />
     <Compile Include="Data\ConferenceApi.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
+    <Compile Include="Dialogs\ConferenceDetailsDialog.cs" />
     <Compile Include="Dialogs\RootDialog.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

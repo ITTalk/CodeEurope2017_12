@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using System;
 
 namespace Bot_Application1
 {
@@ -34,6 +35,19 @@ namespace Bot_Application1
             }
             return await Events;
         }
+
+        internal async Task<IEnumerable<Event>> GetConferencesAsync(string conferenceTitle)
+        {
+            var normalizedName = (conferenceTitle ?? "").ToUpper();
+            return (await GetEvents()).Where(e => e.EventName.ToUpper().Contains(normalizedName));
+        }
+
+        internal async Task<Event> GetConferenceAsync(string conferenceTitle)
+        {
+            var normalizedName = (conferenceTitle ?? "").ToUpper();
+            return (await GetEvents()).FirstOrDefault(e => e.EventName.ToUpper().Contains(normalizedName));
+        }
+
         private async Task<List<SpeakerList>> GetSpeakers()
         {
             if (Speakers == null)
