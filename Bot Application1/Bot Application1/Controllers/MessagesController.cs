@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Connector;
+using System;
+using System.Linq;
 
 namespace Bot_Application1
 {
@@ -19,6 +21,25 @@ namespace Bot_Application1
             if (activity.Type == ActivityTypes.Message)
             {
                 await Conversation.SendAsync(activity, () => new Dialogs.RootDialog());
+            }
+            else if(activity.Type == ActivityTypes.ConversationUpdate)
+            {
+                IConversationUpdateActivity conversationUpdate = activity;
+                var client = new ConnectorClient(new Uri(activity.ServiceUrl),new MicrosoftAppCredentials());
+                if(activity.MembersAdded!=null)
+                {
+                    activity
+                        .MembersAdded
+                        .Where(newMember=> newMember.Id!= activity.Recipient.Id)
+                        .ToList()
+                        .ForEach(newMember =>
+                        {
+                                var reply = activity.CreateReply();
+                                reply.Text = $"Welcome {newMember.Name}!. I'm CodeEurope Bot.  \n How can I help you?";
+                                client.Conversations.ReplyToActivityAsync(reply);
+                        });
+                }
+               
             }
             else
             {
