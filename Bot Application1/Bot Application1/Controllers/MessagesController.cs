@@ -23,19 +23,8 @@ namespace Bot_Application1
 
             if (activity.Type == ActivityTypes.Message)
             {
-
-                if (activity.Text.Contains("speaker") || activity.Text.Contains("whois"))
-                {
-                   await client.Conversations.SendToConversationAsync(await new UserInfoCard().GetUserInfoCardAsync(activity));
-                }
-                else if (activity.Text.Contains("conf"))
-                {
-                    await Conversation.SendAsync(activity, () => new Dialogs.ConferenceDetailsDialog());
-                }
-                else
-                {
-                    await Conversation.SendAsync(activity, () => new Dialogs.RootDialog());
-                }
+                await Conversation.SendAsync(activity, () => new Dialogs.RootDialog());
+     
             }
             else if (activity.Type == ActivityTypes.ConversationUpdate)
             {

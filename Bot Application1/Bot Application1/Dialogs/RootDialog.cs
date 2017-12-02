@@ -2,6 +2,8 @@
 using System.Threading.Tasks;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Connector;
+using System.Threading;
+using Bot_Application1.Cards;
 
 namespace Bot_Application1.Dialogs
 {
@@ -19,13 +21,30 @@ namespace Bot_Application1.Dialogs
         {
             var activity = await result as Activity;
 
-            // calculate something for us to return
-            int length = (activity.Text ?? string.Empty).Length;
+            if (activity.Text.Contains("speaker") || activity.Text.Contains("whois"))
+            {
+               await context.PostAsync(await new UserInfoCard().GetUserInfoCardAsync(activity));
+               context.Wait(MessageReceivedAsync);
+            }
+            else if (activity.Text.Contains("conf"))
+            {
+                await context.Forward(new ConferenceDetailsDialog(), NameDialogResumeAfter,activity,CancellationToken.None);
+                return;
+            }
 
-            // return our reply to the user
-            await context.PostAsync($"You sent {activity.Text} which was {length} characters");
-
+            await context.PostAsync("I didn't understand. Try spekaer .... or conf ....");
             context.Wait(MessageReceivedAsync);
         }
+
+
+
+        private async Task NameDialogResumeAfter(IDialogContext context, IAwaitable<object> result)
+        {
+            context.Wait(MessageReceivedAsync);
+        }
+
+
+
+
     }
 }
