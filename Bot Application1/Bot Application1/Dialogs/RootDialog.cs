@@ -20,8 +20,12 @@ namespace Bot_Application1.Dialogs
         private async Task MessageReceivedAsync(IDialogContext context, IAwaitable<object> result)
         {
             var activity = await result as Activity;
-
-            if (activity.Text.Contains("speaker") || activity.Text.Contains("whois"))
+            
+             if (activity.Text.Contains("search"))
+            {
+                context.Call(new ConferenceSearchDialog(), NameDialogResumeAfter);
+                return;
+            }else if (activity.Text.Contains("speaker") || activity.Text.Contains("whois"))
             {
                await context.PostAsync(await new UserInfoCard().GetUserInfoCardAsync(activity));
                context.Wait(MessageReceivedAsync);

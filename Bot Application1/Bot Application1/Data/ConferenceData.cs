@@ -36,9 +36,13 @@ namespace Bot_Application1
             return await Events;
         }
 
-        internal async Task<IEnumerable<Event>> GetConferencesAsync(string conferenceTitle)
+        internal async Task<IEnumerable<Event>> GetConferencesAsync(string conferenceTitle = null)
         {
-            var normalizedName = (conferenceTitle ?? "").ToUpper();
+            if(conferenceTitle == null)
+            {
+                return await GetEvents();
+            }
+            var normalizedName = conferenceTitle.ToUpper();
             return (await GetEvents()).Where(e => e.EventName.ToUpper().Contains(normalizedName));
         }
 
