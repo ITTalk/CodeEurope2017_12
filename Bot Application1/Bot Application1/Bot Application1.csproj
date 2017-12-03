@@ -118,6 +118,7 @@
     <Compile Include="Controllers\MessagesController.cs" />
     <Compile Include="Dialogs\ConferenceSearch.cs" />
     <Compile Include="Dialogs\ConferenceDetailsDialog.cs" />
+    <Compile Include="Dialogs\LuisRootDialog.cs" />
     <Compile Include="Dialogs\RootDialog.cs" />
     <Compile Include="Dialogs\ConferenceSearchDialog.cs" />
     <Compile Include="Global.asax.cs">

@@ -15,13 +15,11 @@ namespace Bot_Application1.Dialogs
     {
         English, Polish
     }
- 
     public enum ConferenceKindOptions
     {
         Workshop=1,Lecture
         
     }
-
     public enum ConferenceTrackOptions
     {
         FutureInspire=1,
@@ -39,13 +37,18 @@ namespace Bot_Application1.Dialogs
     [Serializable]
     public class ConferenceSearch
     {
-        public ConferenceLocationOptions? Location;
+        public ConferenceLocationOptions? City { get; set; }
         [Optional]
-        public ConferencLanguageOptions? Language;
+        public ConferencLanguageOptions? Language { get; set; }
         [Optional]
-        public List<ConferenceKindOptions> Kinds;
+        public List<ConferenceKindOptions> Types { get; set; }
         [Prompt("Please select {&} from below list? {||}")]
-        public List<ConferenceTrackOptions> Tracks;
-  
+        public List<ConferenceTrackOptions> Tracks { get; set; }
+        [Optional]
+
+        [Template(TemplateUsage.NoPreference,"no","No")]
+        public string Title { get; set; }
+
     };
+ 
 }

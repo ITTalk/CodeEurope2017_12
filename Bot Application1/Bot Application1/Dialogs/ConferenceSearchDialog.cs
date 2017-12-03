@@ -23,7 +23,7 @@ namespace Bot_Application1.Dialogs
         {
             OnCompletionAsyncDelegate<ConferenceSearch> processHotelsSearch = async (ctx, state) =>
             {
-                await ctx.PostAsync($"Ok. Searching for Conferences in {state.Language} in {state.Location}. Tracks {string.Join(",",state.Tracks.Select(t=>t.ToString()))} ...");
+                await ctx.PostAsync($"Ok. Searching for Conferences in {state.Language} in {state.City}. Tracks {string.Join(",",state.Tracks.Select(t=>t.ToString()))} ...");
             };
             return new FormBuilder<ConferenceSearch>()
                     .Message("Welcome to conference search!")
@@ -36,9 +36,9 @@ namespace Bot_Application1.Dialogs
             var searchCriteria = await result;
             var allConferences = (await ConferenceData.Instance.GetConferencesAsync()).ToList();
            var conferences = allConferences.Where(c =>
-            c.CityName == searchCriteria.Location.ToString() &&
+            c.CityName == searchCriteria.City.ToString() &&
             (!searchCriteria.Language.HasValue || c.EventLanguageName == searchCriteria.Language.ToString()) &&
-            (!searchCriteria.Kinds.Any() || searchCriteria.Kinds.ToString().ToLower().Contains(c.EventType)) &&
+            (!searchCriteria.Types.Any() || searchCriteria.Types.ToString().ToLower().Contains(c.EventType)) &&
             (!searchCriteria.Tracks.Any() || searchCriteria.Tracks.Select(t => t.ToString().ToSnakeCase()).Any(cc => c.EventTrack.Contains(cc)))
             ).ToList();
 

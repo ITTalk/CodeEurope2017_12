@@ -7,6 +7,7 @@ using Bot_Application1.Cards;
 
 namespace Bot_Application1.Dialogs
 {
+
     [Serializable]
     public class RootDialog : IDialog<object>
     {
